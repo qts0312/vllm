@@ -25,7 +25,7 @@ TEST_IMAGE_ASSETS = [
 ]
 
 TEST_VIDEO_URLS = [
-    "https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4",
+    "https://github.com/intel-iot-devkit/sample-videos/raw/master/car-detection.mp4",
     "https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi",
 ]
 
@@ -71,7 +71,7 @@ async def test_fetch_image_base64(
     connector = MediaConnector(
         # Domain restriction should not apply to data URLs.
         allowed_media_domains=[
-            "www.bogotobogo.com",
+            # "www.bogotobogo.com",
             "github.com",
         ]
     )
@@ -513,7 +513,7 @@ async def test_allowed_media_domains(video_url: str, num_frames: int):
             }
         },
         allowed_media_domains=[
-            "www.bogotobogo.com",
+            # "www.bogotobogo.com",
             "github.com",
         ],
     )
