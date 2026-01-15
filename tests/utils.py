@@ -231,38 +231,61 @@ class RemoteOpenAIServer:
     def get_client(self, **kwargs):
         if "timeout" not in kwargs:
             kwargs["timeout"] = 600
+
+        http_client = httpx.Client(
+            trust_env=False,
+        )
+
         return openai.OpenAI(
             base_url=self.url_for("v1"),
             api_key=self.DUMMY_API_KEY,
             max_retries=0,
+            http_client=http_client,
             **kwargs,
         )
 
     def get_async_client(self, **kwargs):
         if "timeout" not in kwargs:
             kwargs["timeout"] = 600
+        
+        http_client = httpx.AsyncClient(
+            trust_env=False,
+        )
+
         return openai.AsyncOpenAI(
             base_url=self.url_for("v1"),
             api_key=self.DUMMY_API_KEY,
             max_retries=0,
+            http_client=http_client,
             **kwargs,
         )
 
     def get_client_anthropic(self, **kwargs):
         if "timeout" not in kwargs:
             kwargs["timeout"] = 600
+
+        http_client = httpx.Client(
+            trust_env=False,
+        )
+
         return anthropic.Anthropic(
             base_url=self.url_for(),
             api_key=self.DUMMY_API_KEY,
             max_retries=0,
+            http_client=http_client,
             **kwargs,
         )
 
     def get_async_client_anthropic(self, **kwargs):
         if "timeout" not in kwargs:
             kwargs["timeout"] = 600
+        
+        http_client = httpx.AsyncClient(
+            trust_env=False,
+        )
+
         return anthropic.AsyncAnthropic(
-            base_url=self.url_for(), api_key=self.DUMMY_API_KEY, max_retries=0, **kwargs
+            base_url=self.url_for(), api_key=self.DUMMY_API_KEY, max_retries=0, http_client=http_client, **kwargs
         )
 
 
