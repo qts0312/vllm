@@ -39,18 +39,18 @@ lm-eval[api]>=0.4.9.2 # required for model evaluation test
 mteb[bm25s]>=2, <3 # required for mteb test
 transformers==4.57.3
 tokenizers==0.22.0
-schemathesis>=3.39.15 # Required for openai schema test.
+schemathesis==3.39.15 # Required for openai schema test.
 # quantization
 bitsandbytes==0.46.1
 buildkite-test-collector==0.1.9
 
 
-genai_perf==0.0.8
-tritonclient==2.51.0
+genai_perf
+tritonclient
 
 arctic-inference == 0.1.1 # Required for suffix decoding test
 numba == 0.61.2 # Required for N-gram speculative decoding
-numpy
+numpy >= 2
 runai-model-streamer[s3,gcs]==0.15.3
 fastsafetensors>=0.1.10
 pydantic>=2.12 # 2.11 leads to error on python 3.13
