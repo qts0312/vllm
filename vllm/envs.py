@@ -1635,6 +1635,10 @@ environment_variables: dict[str, Callable[[], Any]] = {
     "VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS": lambda: bool(
         int(os.getenv("VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS", "0"))
     ),
+    # Controling whether to use dummy model in tests for fast CI
+    "VLLM_TEST_USE_DUMMY_MODEL": lambda: bool(
+        int(os.getenv("VLLM_TEST_USE_DUMMY_MODEL", "0"))
+    ),
 }
 
 
@@ -1776,6 +1780,8 @@ def compile_factors() -> dict[str, object]:
         "LOCAL_RANK",
         "CUDA_VISIBLE_DEVICES",
         "NO_COLOR",
+
+        "VLLM_TEST_USE_DUMMY_MODEL",
     }
 
     from vllm.config.utils import normalize_value

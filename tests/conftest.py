@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+import yaml
 import contextlib
 import pathlib
 from copy import deepcopy
@@ -94,6 +95,9 @@ PromptImageInput = _PromptMultiModalInput[Image.Image]
 PromptAudioInput = _PromptMultiModalInput[tuple[np.ndarray, int]]
 PromptVideoInput = _PromptMultiModalInput[np.ndarray]
 
+NON_DUMMY_FUNCTIONS_PATH = "/vllm-workspace/non_dummy_functions.yaml"
+NonDummyFunctions = yaml.safe_load(open(NON_DUMMY_FUNCTIONS_PATH))["functions"]
+
 
 def _read_prompts(filename: str) -> list[str]:
     with open(filename) as f:
@@ -165,6 +169,15 @@ VIDEO_ASSETS = VideoTestAssets()
 """Singleton instance of {class}`VideoTestAssets`."""
 AUDIO_ASSETS = AudioTestAssets()
 """Singleton instance of {class}`AudioTestAssets`."""
+
+
+@pytest.fixture(autouse=True)
+def use_dummy_model(request):
+    test_function = request.node.name
+    if test_function in NonDummyFunctions:
+        os.environ["VLLM_TEST_FORCE_LOAD_FORMAT"] = ""
+    else:
+        os.environ["VLLM_TEST_FORCE_LOAD_FORMAT"] = "dummy"
 
 
 @pytest.fixture(autouse=True)

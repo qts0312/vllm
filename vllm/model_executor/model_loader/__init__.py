@@ -117,7 +117,12 @@ def register_model_loader(load_format: str):
 
 def get_model_loader(load_config: LoadConfig) -> BaseModelLoader:
     """Get a model loader based on the load format."""
+    from vllm import envs
+    
     load_format = load_config.load_format
+    if envs.VLLM_TEST_USE_DUMMY_MODEL:
+        load_format = "dummy"
+    
     if load_format not in _LOAD_FORMAT_TO_MODEL_LOADER:
         raise ValueError(f"Load format `{load_format}` is not supported")
     return _LOAD_FORMAT_TO_MODEL_LOADER[load_format](load_config)

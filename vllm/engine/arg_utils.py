@@ -1424,6 +1424,9 @@ class EngineArgs:
             )
             self.validate_tensorizer_args()
 
+        if envs.VLLM_TEST_USE_DUMMY_MODEL:
+            self.load_format = "dummy"
+
         return LoadConfig(
             load_format=self.load_format,
             download_dir=self.download_dir,
