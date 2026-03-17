@@ -172,15 +172,6 @@ AUDIO_ASSETS = AudioTestAssets()
 
 
 @pytest.fixture(autouse=True)
-def use_dummy_model(request):
-    test_function = request.node.name
-    if test_function in NonDummyFunctions:
-        os.environ["VLLM_TEST_FORCE_LOAD_FORMAT"] = ""
-    else:
-        os.environ["VLLM_TEST_FORCE_LOAD_FORMAT"] = "dummy"
-
-
-@pytest.fixture(autouse=True)
 def init_test_http_connection():
     # pytest_asyncio may use a different event loop per test
     # so we need to make sure the async client is created anew

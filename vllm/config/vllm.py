@@ -784,6 +784,19 @@ class VllmConfig:
                 "precision for chunked prefill triton kernels."
             )
 
+        from vllm import envs
+        if envs.VLLM_SKIP_CUDA_GRAPH:
+            logger.warning(
+                "VLLM_SKIP_CUDA_GRAPH is set. Forcing enforce_eager=True and "
+                "disabling torch.compile and CUDAGraphs."
+            )
+            if self.model_config is not None:
+                self.model_config.enforce_eager = True
+            self.compilation_config.mode = CompilationMode.NONE
+            self.compilation_config.cudagraph_mode = CUDAGraphMode.NONE
+            self.compilation_config.max_cudagraph_capture_size = 0
+            self.compilation_config.cudagraph_capture_sizes = []
+
         if self.model_config is not None and self.model_config.enforce_eager:
             logger.warning(
                 "Enforce eager set, disabling torch.compile and CUDAGraphs. "

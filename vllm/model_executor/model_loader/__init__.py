@@ -120,7 +120,7 @@ def get_model_loader(load_config: LoadConfig) -> BaseModelLoader:
     from vllm import envs
     
     load_format = load_config.load_format
-    if envs.VLLM_TEST_USE_DUMMY_MODEL:
+    if envs.VLLM_USE_DUMMY_MODEL:
         load_format = "dummy"
     
     if load_format not in _LOAD_FORMAT_TO_MODEL_LOADER:

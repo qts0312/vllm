@@ -1636,8 +1636,12 @@ environment_variables: dict[str, Callable[[], Any]] = {
         int(os.getenv("VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS", "0"))
     ),
     # Controling whether to use dummy model in tests for fast CI
-    "VLLM_TEST_USE_DUMMY_MODEL": lambda: bool(
-        int(os.getenv("VLLM_TEST_USE_DUMMY_MODEL", "0"))
+    "VLLM_USE_DUMMY_MODEL": lambda: bool(
+        int(os.getenv("VLLM_USE_DUMMY_MODEL", "0"))
+    ),
+    # Controling whether to skip CUDA graph in tests for fast CI
+    "VLLM_SKIP_CUDA_GRAPH": lambda: bool(
+        int(os.getenv("VLLM_SKIP_CUDA_GRAPH", "0")) 
     ),
 }
 
@@ -1781,7 +1785,8 @@ def compile_factors() -> dict[str, object]:
         "CUDA_VISIBLE_DEVICES",
         "NO_COLOR",
 
-        "VLLM_TEST_USE_DUMMY_MODEL",
+        "VLLM_USE_DUMMY_MODEL",
+        "VLLM_SKIP_CUDA_GRAPH",
     }
 
     from vllm.config.utils import normalize_value

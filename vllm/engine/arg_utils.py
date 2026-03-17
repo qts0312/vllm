@@ -1424,7 +1424,7 @@ class EngineArgs:
             )
             self.validate_tensorizer_args()
 
-        if envs.VLLM_TEST_USE_DUMMY_MODEL:
+        if envs.VLLM_USE_DUMMY_MODEL:
             self.load_format = "dummy"
 
         return LoadConfig(
